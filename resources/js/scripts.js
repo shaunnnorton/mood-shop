@@ -52,15 +52,16 @@ function addItem(name, price) {
 }
 //Show Items
 function showItems() {
+    let itemStr = ''
+    cartItems.innerHTML = `<p>You have ${getQty()} items in your cart</p>`
     
-    
-    console.log(`You have ${getQty()} items in your cart`)
     for(let i=0; i < cart.length ; i += 1) {
-        console.log(`- ${cart[i].name} $${cart[i].price} x ${cart[i].qty} = $${cart[i].price * cart[i].qty}`)
+        const {name , price , qty} = cart[i]
 
+        itemStr += `<li>${name} $${price} x ${qty} = $${price * qty}</li>`
     }
-    
-    console.log(`Your total price is $${getTotal()}`)
+    itemList.innerHTML = itemStr
+    cartTotal.innerHTML = `<p>Your total price is $${getTotal()}</p>`
 
 }
 //Get Qty
@@ -96,8 +97,9 @@ function removeItem(name, qty = 0) {
 
 }
 
-
-
+const itemList = document.getElementById('item-list')
+const cartItems = document.getElementById('cart-items')
+const cartTotal = document.getElementById('cart-total')
 
 //---------------------------------------------------------------
 addItem('Apple', 0.99)
