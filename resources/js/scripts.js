@@ -35,3 +35,16 @@ for (let i=0; i<data.length; ++i) {
     itemsContainer.appendChild(newDiv)
     console.log(img)
 }
+const cart = []
+
+function addItem(name, price) {
+    const item = { name: name , price: price}
+    cart.push(item)
+
+
+}
+
+function showItems() {
+    console.log(cart)
+
+}
