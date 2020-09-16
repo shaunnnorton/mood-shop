@@ -51,6 +51,7 @@ function addItem(name, price) {
     
     const item = { name , price, qty: 1}
     cart.push(item)
+    showItems()
 
 
 }
@@ -62,7 +63,13 @@ function showItems() {
     for(let i=0; i < cart.length ; i += 1) {
         const {name , price , qty} = cart[i]
 
-        itemStr += `<li>${name} $${price} x ${qty} = $${price * qty}</li>`
+        itemStr += `<li>
+        ${name} $${price} x ${qty} = $${price * qty}
+        <button class="remove" data-name="${name}">Remove</button>
+        <button class="remove-one" data-name="${name}" data-price="${price}">-</button>
+        <button class="add-one" data-name="${name}" data-price="${price}">+</button>
+        <input class="update" type="number" min="0" data-name="${name}"> 
+        </li>`
     }
     itemList.innerHTML = itemStr
     cartTotal.innerHTML = `<p>Your total price is $${getTotal()}</p>`
@@ -90,11 +97,12 @@ function removeItem(name, qty = 0) {
     for(let i = 0; i<cart.length;i+=1){
         if(cart[i].name === name){
             if(qty > 0) {
-                cart[i] -= qty
+                cart[i].qty -= qty
             }
             if(cart[i].qty < 1 || qty === 0){
                 cart.splice(i,1)
             }
+            showItems()
             return
         }
     }
@@ -104,14 +112,50 @@ const all_items_button = Array.from(document.querySelectorAll("button"))
 
 all_items_button.forEach(elt => elt.addEventListener('click', () => {
     addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
-    console.log("button Pressed")
+    
     showItems()
 }))
 
 //---------------------------------------------------------------
-/*addItem('Apple', 0.99)
-addItem('Orange', 1.29)
-addItem('Opinion', 0.02)
-addItem('Apple', 0.99)
-addItem('Frisbee', 9.92)
-showItems()*/
+itemList.onclick = function(e) {
+    if (e.target && e.target.classList.contains('remove')) {
+        const name = e.target.dataset.name 
+        removeItem(name)
+
+    }else if (e.target && e.target.classList.contains('add-one')) {
+        const name = e.target.dataset.name
+        const price = e.target.dataset.price 
+        addItem(name,price)
+        showItems()
+
+    }else if (e.target && e.target.classList.contains('remove-one')){
+        const name = e.target.dataset.name 
+        removeItem(name, 1)
+    }
+}
+
+itemList.onchange = function(e) {
+    if (e.target && e.target.classList.contains('update')) {
+        const name = e.target.dataset.name
+        const qty = parseInt(e.target.value)
+        updateCart(name, qty)
+        console.log(name, qty)
+
+
+    }
+}
+
+function updateCart(name, qty) {
+    for (let i = 0; i < cart.length; i+=1){
+        if( cart[i].name === name) {
+            if(cart[i].qty < 1 ){
+                removeItem(name)
+                return
+            }
+            cart[i].qty = qty
+            showItems()
+            return
+        }
+    }
+}
+
