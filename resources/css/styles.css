@@ -3,16 +3,23 @@ body{
     font-size: 16px;
     line-height: 1.5;
     margin: 0;
+    background-color: lightsalmon;
 }
 
 .page-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  background-color: thistle;
+    background-color: thistle;
+    position: fixed;
+    top: 0;
+    margin: 0;
+    width:100%;
+    
+
 }
 
-.page-header ul{
+.page-header ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -23,6 +30,12 @@ body{
     display: block;
     padding:0.5em;
     text-decoration:none;
+}
+.page-header button{
+    align-self: center;
+    border-radius: 30px;
+    margin-top: auto;
+    justify-self: center;
 }
 .items {
     display: grid;
@@ -39,11 +52,41 @@ body{
     flex-direction: column;
 }
 
-button{
+.item button{
     display: flex;
     align-self: center;
     justify-self: flex-end;
     margin-top: auto;
     background-color: teal;
     padding: 1em;
+}
+
+footer button{
+    padding:0.5em;
+    background-color: green;
+    color: honeydew;
+    border-radius: 30px;
+}
+footer{
+    background-color: gray;
+    margin: 0;
+    bottom: 0;
+    position: fixed;
+}
+footer ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+footer ul li{
+    background-color: darkgray;
+    padding:0.25em;
+    width: 500px;
+    margin: 0;
+    bottom: 0;
+    position: relative;
+}
+footer input{
+    width: 40px;
 }

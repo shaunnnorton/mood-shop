@@ -64,7 +64,7 @@ function showItems() {
         const {name , price , qty} = cart[i]
 
         itemStr += `<li>
-        ${name} $${price} x ${qty} = $${price * qty}
+        ${name} $${price} x ${qty} = $${parseInt(price * qty)}
         <button class="remove" data-name="${name}">Remove</button>
         <button class="remove-one" data-name="${name}" data-price="${price}">-</button>
         <button class="add-one" data-name="${name}" data-price="${price}">+</button>
@@ -109,7 +109,11 @@ function removeItem(name, qty = 0) {
 
 }
 const all_items_button = Array.from(document.querySelectorAll("button"))
-
+for(let i = 0; i < all_items_button.length; i+=1){
+    if(all_items_button[i].id === "cart-button"){
+        all_items_button.splice(i,1)
+    }
+}
 all_items_button.forEach(elt => elt.addEventListener('click', () => {
     addItem(elt.getAttribute('id'), elt.getAttribute('data-price'))
     
@@ -159,3 +163,15 @@ function updateCart(name, qty) {
     }
 }
 
+const cartButton = document.getElementById("cart-button")
+const footer = document.getElementById("footer")
+
+cartButton.onclick = function(e) {
+    if(footer.style.display == "none"){
+        footer.style.display = 'block';
+        showItems()
+    }else if(footer.style.display == "block"){
+        footer.style.display = 'none';
+    }
+    
+}
